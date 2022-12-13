@@ -1,7 +1,8 @@
 --- 
 packages: 
   - httpd 
-  - php  
+  - php
+  - mysql-server  
 owner: "apache" 
 group: "apache" 
 httpd_port: 8080
