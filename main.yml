@@ -1,26 +1,26 @@
 --- 
-- name: "Git test playbook" 
-  hosts: amazon 
-  become: true 
+- name: "Git test playbook"
+  hosts: amazon
+  become: true
   vars_files:
     - variables.yml
-  tasks: 
-    
+  tasks:
+
     - name: "Installing apache"
       package:
         name: "httpd"
         state: present
-         
+
     - name: "Installing PHP"
-         
+
     - name: "Install mysql"
-      package: 
+      package:
         name: "mysql-server"
         state: present
     - name: "Restarting mysql server"
       package:
         name: "mysql-server"
-        state: restarted 
+        state: restarted
         enabled: true
 
     - name: "Creating httpd.conf from httpd.conf.tmpl file"
@@ -28,31 +28,37 @@
         src: httpd.conf.tmpl
         dest: /etc/httpd/conf/httpd.conf
         owner: "{{ owner }}"
-        group: "{{ group }}"   
+        group: "{{ group }}"
 
     - name: "Creating Virtualhost Configuration File"
       template:
-        src: virtualhost.conf.tmpl 
+        src: virtualhost.conf.tmpl
         dest: /etc/httpd/conf.d/default.conf
         owner: "{{ owner }}"
-        group: "{{ group }}"   
+        group: "{{ group }}"
 
     - name: "Creating Documentroot For the virtualhost"
       file:
         path: "/var/www/html/{{ httpd_domain }}"
         state: directory
         owner: "{{ owner }}"
-        group: "{{ group }}"      
+        group: "{{ group }}"
 
-    - name: "Creating index.html page"  
-      copy: 
-        content: "<h1><center> TEST PAGE {{ ansible_fqdn }} </h1></center>" 
-        dest: /var/www/html/index.html 
+    - name: "Creating index.html page"
+      copy:
+        content: "<h1><center> TEST PAGE {{ ansible_fqdn }} </h1></center>"        
+        dest: /var/www/html/index.html
         owner: "{{ owner }}"
-        group: "{{ group }}"        
-      
-    - name: "Restart/enable apache"  
-      service: 
+        group: "{{ group }}"
+
+    - name: "Restart/enable apache"
+      service:
         name: httpd
         state: restarted
         enabled: true
+
+    - name: "Deleted Anonymous users"
+
+    - name: "Root password reset"
+
+    - name: "Test database removed"    
