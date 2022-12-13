@@ -10,6 +10,15 @@
       package:
         name: "httpd"
         state: present
+
+    - name: "Creating httpd.conf from httpd.conf.tmpl file"
+      template:
+        src: /home/ec2-user/git-project/httpd.conf.template/
+        dest: /etc/httpd/conf/httpd.conf
+        remote_src: true
+        owner: "{{ owner }}"
+        group: "{{ group }}"    
+        
          
     - name: "Restart/enable apache"  
       service: 
