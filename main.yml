@@ -13,13 +13,33 @@
 
     - name: "Creating httpd.conf from httpd.conf.tmpl file"
       template:
-        src: /home/ec2-user/git-project/httpd.conf.template/
+        src: httpd.conf.tmpl
         dest: /etc/httpd/conf/httpd.conf
         remote_src: true
         owner: "{{ owner }}"
-        group: "{{ group }}"    
-        
-         
+        group: "{{ group }}"   
+
+    - name: "Creating Virtualhost Configuration File"
+      template:
+        src: virtualhost.conf.tmpl 
+        dest: /etc/httpd/conf.d/default.conf
+        owner: "{{ owner }}"
+        group: "{{ group }}"   
+
+    - name: "Creating Documentroot For the virtualhost"
+      file:
+        path: "/var/www/html/{{ httpd_domain }}"
+        state: directory
+        owner: "{{ owner }}"
+        group: "{{ group }}"      
+
+    - name: "Creating index.html page"  
+      copy: 
+        content: "<h1><center> TEST PAGE {{ ansible_fqdn }} </h1></center>" 
+        dest: /var/www/html/index.html 
+        owner: "{{ owner }}"
+        group: "{{ group }}"        
+      
     - name: "Restart/enable apache"  
       service: 
         name: httpd

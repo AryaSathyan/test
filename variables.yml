@@ -1,6 +1,7 @@
----
-packages:
-  - httpd
-owner: "apache"
-group: "apache"  
-httpd_port: 8080  
+--- 
+packages: 
+  - httpd 
+owner: "apache" 
+group: "apache" 
+httpd_port: 8080
+httpd_domain: "example.domain.com"
